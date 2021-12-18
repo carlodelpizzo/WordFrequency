@@ -1,4 +1,7 @@
-def count_words(file_path: str, case_sensitive=False):
+def count_words(file_path='', case_sensitive=False):
+    if file_path == '':
+        file_path = input('Enter file path:\n')
+
     errors = (FileNotFoundError, PermissionError, OSError)
     try:
         text_file = open(file_path, 'r', errors='ignore')
@@ -96,4 +99,4 @@ def count_words(file_path: str, case_sensitive=False):
         print('Unrecognized characters:', unrecognized_characters)
 
 
-count_words(input('Enter file path:\n'))
+count_words()
