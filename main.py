@@ -1,4 +1,4 @@
-def count_words(file_path: str, case_sensitive=False, print_results=True):
+def count_words(file_path: str, case_sensitive=False):
     errors = (FileNotFoundError, PermissionError, OSError)
     try:
         text_file = open(file_path, 'r', errors='ignore')
@@ -63,39 +63,37 @@ def count_words(file_path: str, case_sensitive=False, print_results=True):
 
             word_counts[word_string] = 1
 
-    if print_results:
-        if len(word_counts) == 0:
-            print('No results')
-            return
-
-        ordered_list = []
-        first_pass = True
-        for key in word_counts:
-            if first_pass:
-                ordered_list.append([key, word_counts[key]])
-                first_pass = False
-                continue
-
-            added = False
-            for i in range(len(ordered_list)):
-                if word_counts[key] > ordered_list[i][1]:
-                    ordered_list.insert(i, [key, word_counts[key]])
-                    added = True
-                    break
-
-            if not added:
-                ordered_list.append([key, word_counts[key]])
-
-        word_count = 0
-        for word in ordered_list:
-            print(word[0], word[1])
-            word_count += word[1]
-
-        print('Total word count:', word_count)
-
-        if len(unrecognized_characters) != 0:
-            print('Unrecognized characters:', unrecognized_characters)
+    if len(word_counts) == 0:
+        print('No results')
         return
+
+    ordered_list = []
+    first_pass = True
+    for key in word_counts:
+        if first_pass:
+            ordered_list.append([key, word_counts[key]])
+            first_pass = False
+            continue
+
+        added = False
+        for i in range(len(ordered_list)):
+            if word_counts[key] > ordered_list[i][1]:
+                ordered_list.insert(i, [key, word_counts[key]])
+                added = True
+                break
+
+        if not added:
+            ordered_list.append([key, word_counts[key]])
+
+    word_count = 0
+    for word in ordered_list:
+        print(word[0], word[1])
+        word_count += word[1]
+
+    print('Total word count:', word_count)
+
+    if len(unrecognized_characters) != 0:
+        print('Unrecognized characters:', unrecognized_characters)
 
 
 count_words(input('Enter file path:\n'))
